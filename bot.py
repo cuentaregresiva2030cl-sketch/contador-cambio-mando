@@ -1,9 +1,9 @@
 import tweepy
 import os
-import random # Para elegir un mensaje al azar
+import random
 
 def post_tweet_api():
-    # 1. Tu lista de mensajes
+    # 1. Tu lista de mensajes completa
     messages = [
         "Un día menos.", "La cuenta regresiva continúa.", "El calendario sigue avanzando.",
         "Cada día cuenta.", "El tiempo pasa.", "Seguimos avanzando.",
@@ -24,14 +24,16 @@ def post_tweet_api():
     # 2. Elegir un mensaje aleatorio
     texto_para_twittear = random.choice(messages)
 
-    # 3. Obtener credenciales de GitHub
+    # 3. Configuración de credenciales (asegúrate de tener BEARER_TOKEN en GitHub)
+    bearer_token = os.environ.get("BEARER_TOKEN")
     api_key = os.environ.get("API_KEY")
     api_secret = os.environ.get("API_SECRET")
     access_token = os.environ.get("ACCESS_TOKEN")
     access_token_secret = os.environ.get("ACCESS_TOKEN_SECRET")
 
-    # 4. Configurar Cliente (API v2)
+    # 4. Inicializar Cliente para API v2
     client = tweepy.Client(
+        bearer_token=bearer_token,
         consumer_key=api_key,
         consumer_secret=api_secret,
         access_token=access_token,
@@ -40,6 +42,7 @@ def post_tweet_api():
 
     try:
         print(f"Intentando publicar: {texto_para_twittear}")
+        # En la API v2 se usa create_tweet
         response = client.create_tweet(text=texto_para_twittear)
         print(f"¡Éxito! Tweet publicado. ID: {response.data['id']}")
     except Exception as e:
