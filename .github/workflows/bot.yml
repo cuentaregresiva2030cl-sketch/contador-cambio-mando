@@ -2,8 +2,8 @@ name: Bot Cuenta Regresiva
 
 on:
   schedule:
-    - cron: "0 14 * * *"
-  workflow_dispatch:
+    - cron: "0 14 * * *" # Se ejecuta automáticamente a las 14:00 UTC
+  workflow_dispatch:      # Permite el botón "Run workflow" manual
 
 jobs:
   run:
@@ -27,5 +27,4 @@ jobs:
           API_SECRET: ${{ secrets.API_SECRET }}
           ACCESS_TOKEN: ${{ secrets.ACCESS_TOKEN }}
           ACCESS_TOKEN_SECRET: ${{ secrets.ACCESS_TOKEN_SECRET }}
-          BEARER_TOKEN: ${{ secrets.BEARER_TOKEN }}
         run: python bot.py
