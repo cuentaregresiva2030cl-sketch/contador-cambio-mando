@@ -1,7 +1,7 @@
 import tweepy
 import os
 
-def post_tweet_api(text,image):
+def post_tweet_api(text, image):
 
     auth = tweepy.OAuth1UserHandler(
         os.environ["API_KEY"],
@@ -12,4 +12,4 @@ def post_tweet_api(text,image):
 
     api = tweepy.API(auth)
 
-    api.update_status_with_media(image,text)
+    api.update_status_with_media(filename=image, status=text)
