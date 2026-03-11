@@ -24,29 +24,24 @@ def post_tweet_api():
     # 2. Elegir un mensaje aleatorio
     texto_para_twittear = random.choice(messages)
 
-    # 3. Configuración de credenciales (asegúrate de tener BEARER_TOKEN en GitHub)
-    bearer_token = os.environ.get("BEARER_TOKEN")
+    # 3. Cargar credenciales desde GitHub Secrets
     api_key = os.environ.get("API_KEY")
     api_secret = os.environ.get("API_SECRET")
     access_token = os.environ.get("ACCESS_TOKEN")
     access_token_secret = os.environ.get("ACCESS_TOKEN_SECRET")
 
-    # 4. Inicializar Cliente para API v2
-    client = tweepy.Client(
-        bearer_token=bearer_token,
-        consumer_key=api_key,
-        consumer_secret=api_secret,
-        access_token=access_token,
-        access_token_secret=access_token_secret
-    )
+    # 4. Configuración para API v1.1
+    auth = tweepy.OAuth1UserHandler(api_key, api_secret, access_token, access_token_secret)
+    api = tweepy.API(auth)
 
     try:
-        print(f"Intentando publicar: {texto_para_twittear}")
-        # En la API v2 se usa create_tweet
-        response = client.create_tweet(text=texto_para_twittear)
-        print(f"¡Éxito! Tweet publicado. ID: {response.data['id']}")
+        print(f"Intentando publicar vía API v1.1: {texto_para_twittear}")
+        # En v1.1 se usa update_status
+        api.update_status(status=texto_para_twittear)
+        print("¡Éxito! Tweet publicado correctamente.")
     except Exception as e:
-        print(f"Error detectado: {e}")
+        print(f"Error detectado en v1.1: {e}")
+        print("Si el error persiste, X podría haber bloqueado el acceso gratuito total para esta cuenta.")
 
 if __name__ == "__main__":
     post_tweet_api()
