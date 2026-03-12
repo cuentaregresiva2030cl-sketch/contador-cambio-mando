@@ -5,7 +5,7 @@ from datetime import datetime
 
 def post_tweet():
     # 1. Configura aquí tus Hashtags (puedes poner los que quieras)
-    mis_hashtags = "#Chile #CuentaRegresiva2030 #CambioDeMando #Santiago"
+    mis_hashtags = "#Chile #CuentaRegresiva2030 #Presidenciales #CambioDeMando #Elecciones2029 #Santiago "
 
     # 2. Cálculo de días faltantes
     fecha_objetivo = datetime(2030, 3, 11)
