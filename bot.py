@@ -31,20 +31,17 @@ def post_tweet():
     access_token = os.environ.get("ACCESS_TOKEN")
     access_token_secret = os.environ.get("ACCESS_TOKEN_SECRET")
 
+   # 5. Inicializar el cliente con un "User Agent" y reintentos automáticos
     client = tweepy.Client(
         consumer_key=api_key,
         consumer_secret=api_secret,
         access_token=access_token,
-        access_token_secret=access_token_secret
+        access_token_secret=access_token_secret,
+        wait_on_rate_limit=True  # Si X está lento, espera en lugar de fallar
     )
 
     try:
         print(f"Intentando publicar:\n{texto}")
-        # user_auth=True es fundamental para evitar el error 403
-        response = client.create_tweet(text=texto, user_auth=True)
+        # Agregamos user_auth=True explícitamente aquí
+        response = client.create_tweet(text=texto, user_auth=True) 
         print(f"¡ÉXITO! Tweet publicado. ID: {response.data['id']}")
-    except Exception as e:
-        print(f"Error detectado: {e}")
-
-if __name__ == "__main__":
-    post_tweet()
